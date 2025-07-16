@@ -1,1 +1,65 @@
-# login-web
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modern Sign Up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("YOUR_PUBLIC_KEY"); // ضع المفتاح هنا
+    })();
+  </script>
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-black min-h-screen flex items-center justify-center">
+
+  <div class="bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl rounded-2xl p-8 w-full max-w-md text-white animate-fade-in">
+    <h2 class="text-3xl font-bold text-center mb-6 text-cyan-400">Create Account</h2>
+    
+    <form id="signup-form" class="space-y-6">
+      <div>
+        <label class="block text-sm mb-1">Username</label>
+        <input type="text" name="username" required class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+      </div>
+
+      <div>
+        <label class="block text-sm mb-1">Email</label>
+        <input type="email" name="user_email" required class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+      </div>
+
+      <button type="submit" class="w-full py-2 rounded-lg bg-cyan-400 hover:bg-cyan-500 text-black font-semibold shadow-md transition duration-300">
+        Sign Up
+      </button>
+    </form>
+
+    <p id="status-msg" class="text-sm mt-4 text-center"></p>
+  </div>
+
+  <style>
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fade-in 1s ease-out forwards;
+    }
+  </style>
+
+  <script>
+    document.getElementById("signup-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+        .then(() => {
+          document.getElementById("status-msg").innerText = "✅ تم التسجيل بنجاح!";
+          document.getElementById("signup-form").reset();
+        }, (error) => {
+          document.getElementById("status-msg").innerText = "❌ فشل الإرسال. حاول مرة أخرى.";
+          console.error(error);
+        });
+    });
+  </script>
+
+</body>
+</html>
